@@ -3,15 +3,15 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration {
+class UserTaskTable extends Migration {
 
 	/**
 	 * Run the migrations.
 	 *
 	 * @return void
 	 */
-
-	public function up() {
+	public function up()
+	{
 		#Create Users Table
 		Schema::create('users', function($table) {
 
@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration {
 			$table->increments('id');
 
 			#General table data
-			$table->varchar('task');
+			$table->string('task');
 			$table->dateTime('duedate');
 			$table->boolean('complete');
 			$table->integer('user_id')->unsigned();
@@ -46,7 +46,6 @@ class CreateUsersTable extends Migration {
 				->references('id')
 				->on('users');
 		});
-
 	}
 
 	/**
@@ -54,8 +53,8 @@ class CreateUsersTable extends Migration {
 	 *
 	 * @return void
 	 */
-
-	public function down() {
+	public function down()
+	{
 		Schema::table('tasks', function($table) {
 			$table->dropForeign('tasks_user_id_foreign'); # table_fields_foreign
 		});
@@ -64,5 +63,3 @@ class CreateUsersTable extends Migration {
 	}
 
 }
-
-?>
