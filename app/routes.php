@@ -11,38 +11,91 @@
 |
 */
 
+//////////////////////
+//Route to Home Page//
+//////////////////////
 Route::get('/', function()
 {
 	return View::make('index');
 });
 
-//Route to Complete Tasks Page
+////////////////////////////////
+//Route to Complete Tasks Page//
+////////////////////////////////
 Route::get('/complete', function()
 {
+	//SQL statement based on Completed or not
+	DB::statement('SELECT task FROM Task WHERE complete==1');
+
 	return View::make('complete');
-		//-> with('paragraphs',$paragraphs);
+
 });
 
-//Route to Incomplete Tasks Page
+//////////////////////////////////
+//Route to Incomplete Tasks Page//
+//////////////////////////////////
 Route::get('/incomplete', function()
 {
+
+	//SQL statement based on Completed or not
+	DB::statement('SELECT task FROM Task WHERE complete<>1');
+
 	return View::make('incomplete');
 });
 
-//Route to All Tasks Page
+///////////////////////////
+//Route to All Tasks Page//
+///////////////////////////
 Route::get('/all', function()
 {
-		return View::make('all');
+	$collection = Task::all();
+
+	foreach($collection as $task) {
+	   echo $task->name"<br>";
+	}
+
+	return View::make('all');
 });
 
-//Route to Create a New Task Page
+///////////////////////////////////
+//Route to Create a New Task Page//
+///////////////////////////////////
 Route::get('/new', function()
 {
-	return View::make('new');
+	#Instantiate a new Task model class
+	$task = new Task();
+
+	#Set
+	$task->name={$name}; //Task Name
+	$task->duedate={$duedate}; //Date Due
+	$task->complete=${$complete}; //Completed or not?
+
+	#Save the task
+	$task->save();
+
+	return View::make('new')
+	-> with('name',$name)
+	-> with('duedate',$duedate)
+	-> with('complete',$complete);
 });
 
-//Route to Edit a Task Page
+/////////////////////////////
+//Route to Edit a Task Page//
+/////////////////////////////
 Route::get('/edit', function()
 {
+		# Get the Task to update
+    $task = Task::where('task', '', '')->first();// ????
+
+    # User Defined Name
+    $task->name={$UserDefname}; //Task Name
+		$task->duedate={$UserDefduedate}; //Date Due
+		$task->complete=${$UserDefcomplete}; //Completed or not?
+
+    # Save the changes
+    $task->save();
+
+    return
+
 	return View::make('edit');
 });
