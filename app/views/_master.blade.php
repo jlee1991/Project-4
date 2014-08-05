@@ -15,6 +15,12 @@
 
 	<a href='/'><img class='logo' src='<?php echo URL::asset('/images/softwarebanner.jpg'); ?>' alt='Software Banner'></a>
 
+		@if(Auth::check())
+			<a href='/logout'>Log out</a>
+		@else
+			<a href='/signup'>Sign up</a> or <a href='/login'>Log in</a>
+		@endif
+
 	@yield('content')
 
 	@yield('body')

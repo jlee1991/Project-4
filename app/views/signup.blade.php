@@ -19,7 +19,6 @@
 
 		Password:<br>
 		{{ Form::password('password') }}<br>
-		<small>Min: 6</small><br><br>
 
 		{{ Form::submit('Submit') }}
 

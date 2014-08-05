@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserTaskTable extends Migration {
+class CreateUserTaskTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -20,6 +20,7 @@ class UserTaskTable extends Migration {
 
 			#General table data
 			$table->string('email')->unique();
+			$table->boolean('remember_token');
 			$table->string('password');
 
 			#created_at, updated_at columns
@@ -34,7 +35,7 @@ class UserTaskTable extends Migration {
 
 			#General table data
 			$table->string('task');
-			$table->dateTime('duedate');
+			$table->string('duedate');
 			$table->boolean('complete');
 			$table->integer('user_id')->unsigned();
 

@@ -9,8 +9,11 @@
 @stop
 
 @section('content')
-<a href='/'>Return Home</a>
+<br><a href='/'>Return Home</a><br>
 
-
+@foreach ($tasks as $task)
+  Task: {{ $task->task }}<br>
+  Due Date: {{ $task->duedate }}</p>
+@endforeach
 
 @stop
