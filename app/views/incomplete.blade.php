@@ -12,8 +12,9 @@
 <br><a href='/'>Return Home</a><br><br>
 
 @foreach ($tasks as $task)
-  Task: {{ $task->task }}<br>
-  Due Date: {{ $task->duedate }}</p>
+  <a href='edit/{{ $task->id }}'>Edit {{ $task->task }}</a><br>
+  <i>Task:</i> {{ $task->task }}<br>
+  <i>Due Date:</i>  {{ $task->duedate }}</p>
 @endforeach
 
 @stop

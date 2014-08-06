@@ -14,7 +14,7 @@
   <div class="error">{{ $message}}</div>
 @endforeach
 
-<br><a href='/'>Return Home</a>
+<br><a href='/'>Return Home</a><br><br>
 
   {{ Form::open(array('url' => '/new')) }}
 
@@ -24,9 +24,9 @@
     Due Date:<br>
     {{ Form::text('duedate') }}<br><br>
 
-    Complete? <br>
-    Yes: {{ Form::checkbox('complete',1) }}<br>
-    No: {{ Form::checkbox('complete',0) }}<br><br>
+    Complete?<br>
+    Yes: {{ Form::checkbox('complete', 1) }}<br>
+    No: {{ Form::checkbox('complete', 0) }}<br><br>
 
     {{ Form::submit('Submit') }}
 

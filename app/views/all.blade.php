@@ -12,11 +12,13 @@
 <br><a href='/'>Return Home</a><br><br>
 
 @foreach ($tasks as $task)
-  Task: {{ $task->task }}<br>
-  Due Date: {{ $task->duedate }}<br><br>
+  <a href='edit/{{ $task->id }}'>Edit {{ $task->task }}</a><br>
+  <i>Task:</i> {{ $task->task }}<br>
+  <i>Due Date:</i>  {{ $task->duedate }}
   @if($task->complete == 1)
-    Complete<br><br>
+    <br><b>Complete</b>
   @endif
+  <br><br>
 @endforeach
 
 @stop

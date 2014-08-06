@@ -130,14 +130,7 @@ Route::get('/complete', function()
 {
 
 	//SQL statement based on Completed or not
-	//$complete = DB::statement('SELECT task, duedate FROM tasks WHERE complete = \'1\' AND user_id = "Auth::user()->id" ');
 	$tasks = Task::where('complete','=', 1) -> where('user_id','=', Auth::user()->id) -> get();
-
-	//$tasks = DB::table('tasks')->get();
-
-	/*foreach ($task as $tasks) {
-  	var_dump($task->task);
-	}*/
 
 	return View::make('complete')
 		-> with('tasks', $tasks);
@@ -166,13 +159,13 @@ Route::get('/incomplete', function()
 		-> with('tasks', $tasks);
 });
 
-Route::post('/incomplete', function()
+/*Route::post('/incomplete', function()
 {
 	//SQL statement based on Completed or not
 	DB::statement('SELECT task FROM Task WHERE complete==0');
 
 	return View::make('incomplete');
-});
+});*/
 
 ///////////////////////////
 //Route to All Tasks Page//
@@ -187,7 +180,7 @@ Route::get('/all', function()
 
 });
 
-Route::post('/all', function()
+/*Route::post('/all', function()
 {
 	$collection = Task::all();
 
@@ -196,7 +189,7 @@ Route::post('/all', function()
 	}
 
 	return View::make('all');
-});
+});*/
 
 ///////////////////////////////////
 //Route to Create a New Task Page//
@@ -256,9 +249,14 @@ Route::post('/new', function()
 
 		#Set
 		$task->task = $data['name']; //Task Name
-		$task->duedate = $data['duedate']; //Date Due
-		$task->complete = $data['complete'];
+		$task->complete = $data['complete']; //Complete of not?
+		$task->duedate = $data['duedate'];
 		$task->user_id = Auth::user()->id;
+
+		#Date Due
+		//$date = $data['duedate'];
+		//$newdate = date(“F j y”, time($date))
+		//$task->duedate = $newdate;
 
 		#Save the task
 		$task->save();
@@ -271,18 +269,49 @@ Route::post('/new', function()
 /////////////////////////////
 //Route to Edit a Task Page//
 /////////////////////////////
-Route::get('/edit', function()
-{/*
-		# Get the Task to update
-    $task = Task::where('task', '', '')->first();// ????
+Route::get('/edit/{id}', function($id)
+{
 
-    # User Defined Name
-    $task->name={$UserDefname}; //Task Name
-		$task->duedate={$UserDefduedate}; //Date Due
-		$task->complete=${$UserDefcomplete}; //Completed or not?
+	$task = Task::find($id);
 
-    # Save the changes
-    $task->save();*/
+	return View::make('edit') -> with('task', $task);
 
-	return View::make('edit');
+});
+
+Route::post('/edit/{id}', function($id)
+{
+
+	$data = Input::all();
+
+	#Define the rules
+	$rules = array(
+		'name' => 'required',
+		'duedate' => 'required',
+		'complete' => 'required'
+	);
+
+	#Run rules and data through validator
+	$validator = Validator::make($data, $rules);
+
+	#Give the user feedback
+	if($validator->fails()) {
+
+		return Redirect::to('/edit/{id}')
+			/*->with('flash_message', 'Sign up failed; please fix the errors listed below.')*/
+			->withInput()
+			->withErrors($validator);
+	}
+
+	$task = Task::find($id);
+
+	# User Defined Name
+	$task->task = $data['name']; //Task Name
+	$task->complete = $data['complete']; //Complete of not?
+	$task->duedate = $data['duedate'];
+
+	# Save the changes
+	$task->save();
+
+	return View::make('edit') -> with('task', $task);
+
 });

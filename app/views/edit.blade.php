@@ -9,25 +9,27 @@
 @stop
 
 @section('content')
-<br><a href='/'>Return Home</a>
 
-@if ()
-  {{ Form::open(array('url' => '/edit')) }}
+@foreach($errors->all() as $message)
+  <div class="error">{{ $message}}</div>
+@endforeach
+
+<br><a href='/'>Return Home</a><br><br>
+
+  {{ Form::open(array('url' => '/edit/{$id}')) }}
 
     Task Name:<br>
-    {{ Form::text('name') }}<br><br>
+    {{ Form::text('name', $task->task) }}<br><br>
 
-@elseif (isset($_POST['name']))
     Due Date:<br>
-    {{ Form::text('date') }}<br><br>
+    {{ Form::text('duedate', $task->duedate) }}<br><br>
 
-    Complete?<br>
-    Yes: {{ Form::radio('Yes', 1) }}<br>
-    No: {{ Form::radio('No', 0) }}<br><br>
+    Complete? <br>
+    Yes: {{ Form::checkbox('complete', 1) }}<br>
+    No: {{ Form::checkbox('complete', 0) }}<br><br>
 
     {{ Form::submit('Submit') }}
 
   {{ Form::close() }}
-@endif
 
 @stop
