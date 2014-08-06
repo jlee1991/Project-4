@@ -1,9 +1,5 @@
 @extends('_master')
 
-@section('head')
-  <link rel="stylesheet" href="styles.css" type="text/css">
-@stop
-
 @section('title')
   Task Manager
 @stop
@@ -16,7 +12,7 @@
 
 <br><a href='/'>Return Home</a><br><br>
 
-  {{ Form::open(array('url' => '/edit/{$id}')) }}
+  {{ Form::open(array('url' => array('/edit', $task->id))) }}
 
     Task Name:<br>
     {{ Form::text('name', $task->task) }}<br><br>

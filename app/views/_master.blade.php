@@ -13,6 +13,10 @@
 
 <body>
 
+  @if(Session::get('flash_message'))
+      <div class='flash-message'>{{ Session::get('flash_message') }}</div>
+  @endif
+
 	<a href='/'><img class='logo' src='<?php echo URL::asset('/images/softwarebanner.jpg'); ?>' alt='Software Banner'></a>
 
 		@if(Auth::check())

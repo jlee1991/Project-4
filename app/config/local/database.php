@@ -18,7 +18,7 @@ return array(
 	|
 	*/
 
-/*	//LOCAL CONNECTION
+	//LOCAL CONNECTION
 
 		'connections' => array(
 
@@ -31,17 +31,6 @@ return array(
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
-		),
-*/
-
-		'connections' => array(
-
-		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => 'tunnel.pagodabox.com:3306',
-			'database'  => 'task-manager',
-			'username'  => 'jennell',
-			'password'  => 'oSTZ0q4E',
 		),
 
 		'pgsql' => array(

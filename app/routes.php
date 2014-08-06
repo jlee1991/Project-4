@@ -54,7 +54,7 @@ Route::post('/signup',
 						if($validator->fails()) {
 
 							return Redirect::to('/signup')
-								/*->with('flash_message', 'Sign up failed; please fix the errors listed below.')*/
+								->with('flash_message', 'Sign up failed; please fix the errors listed below.')
 								->withInput()
 								->withErrors($validator);
 						}
@@ -69,14 +69,14 @@ Route::post('/signup',
             }
             catch (Exception $e) {
                 return Redirect::to('/signup')
-									/*->with('flash_message', 'Sign up failed; please try again.')*/
+									->with('flash_message', 'Sign up failed; please try again.')
 									->withInput();
             }
 
             #User Log In
             Auth::login($user);
 
-            return Redirect::to('/')/*->with('flash_message', 'Welcome to the Task Manager')*/;
+            return Redirect::to('/')->with('flash_message', 'Welcome to the Task Manager');
 
         }
     )
@@ -102,10 +102,10 @@ Route::post('/login',
             $credentials = Input::only('email', 'password');
 
             if (Auth::attempt($credentials, $remember = true)) {
-                return Redirect::intended('/')/*->with('flash_message', 'Welcome Back!')*/;
+                return Redirect::intended('/')->with('flash_message', 'Welcome Back!');
             }
             else {
-                return Redirect::to('/login')/*->with('flash_message', 'Log in failed; please try again.')*/;
+                return Redirect::to('/login')->with('flash_message', 'Log in failed; please try again.');
             }
 
             return Redirect::to('login');
@@ -137,16 +137,6 @@ Route::get('/complete', function()
 
 });
 
-/*Route::post('/complete', function()
-{
-
-	//SQL statement based on Completed or not
-	$complete = DB::statement('SELECT task, duedate FROM Task WHERE complete = 1');
-
-	return View::make('complete') -> with($complete,'complete');
-
-});*/
-
 //////////////////////////////////
 //Route to Incomplete Tasks Page//
 //////////////////////////////////
@@ -158,14 +148,6 @@ Route::get('/incomplete', function()
 	return View::make('incomplete')
 		-> with('tasks', $tasks);
 });
-
-/*Route::post('/incomplete', function()
-{
-	//SQL statement based on Completed or not
-	DB::statement('SELECT task FROM Task WHERE complete==0');
-
-	return View::make('incomplete');
-});*/
 
 ///////////////////////////
 //Route to All Tasks Page//
@@ -180,44 +162,12 @@ Route::get('/all', function()
 
 });
 
-/*Route::post('/all', function()
-{
-	$collection = Task::all();
-
-	foreach($collection as $task) {
-		echo $task->name."<br>";
-	}
-
-	return View::make('all');
-});*/
-
 ///////////////////////////////////
 //Route to Create a New Task Page//
 ///////////////////////////////////
 Route::get('/new', function()
 {
-
-	if(isset($_POST['name']) && isset($_POST['duedate']) && isset($_POST['complete'])){
-
-		dd(Input::all());
-
-		#Instantiate a new Task model class
-		$task = new Task();
-
-		#Set
-		$task->name=$_POST['name']; //Task Name
-		$task->duedate=$_POST['duedate']; //Date Due
-		$task->complete=$_POST['complete']; //Completed or not?
-
-		#Save the task
-		$task->save();
-
 		return View::make('new');
-	}
-
-	else{
-		return View::make('new');
-	}
 });
 
 Route::post('/new', function()
@@ -239,7 +189,7 @@ Route::post('/new', function()
 		if($validator->fails()) {
 
 			return Redirect::to('/new')
-				/*->with('flash_message', 'Sign up failed; please fix the errors listed below.')*/
+				->with('flash_message', 'Sign up failed; please fix the errors listed below.')
 				->withInput()
 				->withErrors($validator);
 		}
@@ -297,7 +247,7 @@ Route::post('/edit/{id}', function($id)
 	if($validator->fails()) {
 
 		return Redirect::to('/edit/{id}')
-			/*->with('flash_message', 'Sign up failed; please fix the errors listed below.')*/
+			->with('flash_message', 'Sign up failed; please fix the errors listed below.')
 			->withInput()
 			->withErrors($validator);
 	}
