@@ -12,7 +12,7 @@
 
 <br><a href='/'>Return Home</a><br><br>
 
-  {{ Form::open(array('url' => array('/edit', $task->id))) }}
+  {{ Form::open(array('url' => array('edit', $task->id))) }}
 
     Task Name:<br>
     {{ Form::text('name', $task->task) }}<br><br>

@@ -14,8 +14,8 @@
 ////////////////////////
 //Route to Debug Route//
 ////////////////////////
-# /app/routes.php
-Route::get('/debug', function() {
+Route::controller('debug', 'DebugController');
+/*Route::get('/debug', function() {
 
     echo '<pre>';
 
@@ -58,34 +58,38 @@ Route::get('/debug', function() {
 
     echo '</pre>';
 
-});
+});*/
 
 //////////////////////
 //Route to Home Page//
 //////////////////////
-Route::get('/', function()
+Route::get('/', 'IndexController@getIndex');
+/*Route::get('/', function()
 {
 	return View::make('index');
-});
+});*/
 
-Route::get('/logout', function()
+Route::get('/logout', 'UserController@getLogin');
+/*Route::get('/logout', function()
 {
 	return View::make('login');
-});
+});*/
 
 ////////////////////////
 //Route to Signup Page//
 ////////////////////////
-Route::get('/signup',
+Route::get('/signup', 'UserController@getSignup');
+/*Route::get('/signup',
     array(
         'before' => 'guest',
         function() {
             return View::make('signup');
         }
     )
-);
+);*/
 
-Route::post('/signup',
+Route::post('/signup', ['before' => 'csrf', 'uses' => 'UserController@postSignup'] );
+/*Route::post('/signup',
     array(
         'before' => 'csrf',
         function() {
@@ -129,21 +133,23 @@ Route::post('/signup',
 
         }
     )
-);
+);*/
 
 ///////////////////////
 //Route to Login Page//
 ///////////////////////
-Route::get('/login',
+Route::get('/login', 'UserController@getLogin' );
+/*Route::get('/login',
     array(
         'before' => 'guest',
         function() {
             return View::make('login');
         }
     )
-);
+);*/
 
-Route::post('/login',
+Route::post('/login', ['before' => 'csrf', 'uses' => 'UserController@postLogin'] );
+/*Route::post('/login',
     array(
         'before' => 'csrf',
         function() {
@@ -160,9 +166,10 @@ Route::post('/login',
             return Redirect::to('login');
         }
     )
-);
+);*/
 
-Route::get('/logout', function() {
+Route::get('/logout', ['before' => 'auth', 'uses' => 'UserController@getLogout'] );
+/*Route::get('/logout', function() {
 
     # Log out
     Auth::logout();
@@ -170,12 +177,13 @@ Route::get('/logout', function() {
     # Send them to the homepage
     return Redirect::to('/');
 
-});
+});*/
 
 ////////////////////////////////
 //Route to Complete Tasks Page//
 ////////////////////////////////
-Route::get('/complete', function()
+Route::get('/complete', 'TaskController@getComplete');
+/*Route::get('/complete', function()
 {
 
 	//SQL statement based on Completed or not
@@ -184,24 +192,26 @@ Route::get('/complete', function()
 	return View::make('complete')
 		-> with('tasks', $tasks);
 
-});
+});*/
 
 //////////////////////////////////
 //Route to Incomplete Tasks Page//
 //////////////////////////////////
-Route::get('/incomplete', function()
+Route::get('/incomplete', 'TaskController@getIncomplete');
+/*Route::get('/incomplete', function()
 {
 	//SQL statement based on Completed or not
 	$tasks = Task::where('complete','=', 0) -> where('user_id','=', Auth::user()->id) -> get();
 
 	return View::make('incomplete')
 		-> with('tasks', $tasks);
-});
+});*/
 
 ///////////////////////////
 //Route to All Tasks Page//
 ///////////////////////////
-Route::get('/all', function()
+Route::get('/all', 'TaskController@getAll');
+/*Route::get('/all', function()
 {
 	//SQL statement based on Completed or not
 	$tasks = Task::where('user_id','=', Auth::user()->id) -> get();
@@ -209,17 +219,19 @@ Route::get('/all', function()
 	return View::make('all')
 		-> with('tasks', $tasks);
 
-});
+});*/
 
 ///////////////////////////////////
 //Route to Create a New Task Page//
 ///////////////////////////////////
-Route::get('/new', function()
+Route::get('/new', 'TaskController@getCreate');
+/*Route::get('/new', function()
 {
 		return View::make('new');
-});
+});*/
 
-Route::post('/new', function()
+Route::post('/new', 'TaskController@postCreate');
+/*Route::post('/new', function()
 {
 
 		$data = Input::all();
@@ -262,22 +274,24 @@ Route::post('/new', function()
 
 		return View::make('new');
 
-});
+});*/
 
 
 /////////////////////////////
 //Route to Edit a Task Page//
 /////////////////////////////
-Route::get('/edit/{id}', function($id)
+Route::get('/edit/{id}', 'TaskController@getEdit');
+/*Route::get('/edit/{id}', function($id)
 {
 
 	$task = Task::find($id);
 
 	return View::make('edit') -> with('task', $task);
 
-});
+});*/
 
-Route::post('/edit/{id}', function($id)
+Route::post('/edit/{id}', 'TaskController@postEdit');
+/*Route::post('/edit/{id}', function($id)
 {
 
 	$data = Input::all();
@@ -296,7 +310,7 @@ Route::post('/edit/{id}', function($id)
 	if($validator->fails()) {
 
 		return Redirect::to('/edit/{id}')
-			->with('flash_message', 'Sign up failed; please fix the errors listed below.')
+			->with('flash_message', 'Error, please review the form!')
 			->withInput()
 			->withErrors($validator);
 	}
@@ -313,4 +327,4 @@ Route::post('/edit/{id}', function($id)
 
 	return View::make('edit') -> with('task', $task);
 
-});
+});*/

@@ -16,5 +16,4 @@
   <a href='incomplete'>Incomplete Tasks</a> <br>
   <a href='all'>Display All Tasks</a> <br>
 
-
 @stop
