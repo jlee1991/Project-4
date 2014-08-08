@@ -6,7 +6,7 @@ Live URL: http://task-manager.gopagoda.com
 
 ### Description of the project (2-3+ sentences).
 
-This is my final project, which is a simple task manager that creates users and assigns them to a Task Table that keeps track a user's Complete and Incomplete tasks (really just a  SQL quesry in the case of my program).
+This is my final project, which is a simple task manager that creates users and assigns them to various tasks they create which can be kept track by Complete, Incomplete, All tasks tables (really just a  SQL quesry in the case of my program). The user can also edit and change these tasks.
 
 While I think it looks simplistic in nature, there was a surprising amount of debugging needed. Most of my efforts spent were on trying to understand how PHP and Laravel can work with a project, so I made sure that this project has an MVC type framework. If you have any comments to me on how I can take this project further, I would really appreciate it!
 
@@ -15,6 +15,12 @@ While I think it looks simplistic in nature, there was a surprising amount of de
 I wanted to bring attention to some of the bugs I've been having. For starters, I'm having a lot of problems debugging my Edit Tasks because I can't get the Complete Boxes to generate and autofill what they were previously. Also, to this same application, my validation is not working! I assumed that Edit would have the same validation as Create Task, but that doesn't seem to be the case.
 
 Finally, and this is something I would be interested in learning, I would like to have better visual quality. While my Front End skills aren't beautiful, can you recommend anything for this. Please feel free to make suggestions on added functionalities and maybe applications!
+
+Some suggestions from classmates:
+- Warning when deadline is approaching
+- Export as table or PDF?
+- Better visual effects
+- Mobile Application?
 
 ### Laravel PHP Framework
 
