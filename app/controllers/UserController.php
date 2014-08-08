@@ -2,82 +2,93 @@
 
 class UserController extends BaseController {
 
-	public function __construct() {
-    $this->beforeFilter('guest', array('only' => array('getLogin','getSignup')));
-  }
+	///////////////
+	//Constructor//
+	///////////////
 
-  public function getSignup() {
-		return View::make('signup');
-	}
+		public function __construct() {
+	    $this->beforeFilter('guest', array('only' => array('getLogin','getSignup')));
+	  }
 
-  public function postSignup() {
+	/////////////////////
+	//Sign Up Functions//
+	/////////////////////
 
-    #Define the rules
-    $rules = array(
-      'email' => 'required|email|unique:users,email', //Required, email format, and unique user/email
-      'password' => 'required'
-    );
-
-    #Run rules and data through validator
-    $validator = Validator::make(Input::all(), $rules);
-
-    #Give the user feedback
-    if($validator->fails()) {
-
-      return Redirect::to('/signup')
-        ->with('flash_message', 'Sign up failed; please fix the errors listed below.')
-        ->withInput()
-        ->withErrors($validator);
-    }
-
-    $user = new User;
-    $user->email    = Input::get('email');
-    $user->password = Hash::make(Input::get('password')); //Hash the password!
-
-    #Try/Catch Statement to add the user
-    try {
-        $user->save();
-    }
-    catch (Exception $e) {
-        return Redirect::to('/signup')
-          ->with('flash_message', 'Sign up failed; please try again.')
-          ->withInput();
-    }
-
-    #User Log In
-    Auth::login($user);
-
-    return Redirect::to('/')->with('flash_message', 'Welcome to the Task Manager');
-
-  }
-
-	public function getLogin() {
-
-		return View::make('login');
-
-	}
-
-	public function postLogin() {
-		$credentials = Input::only('email', 'password');
-
-		if (Auth::attempt($credentials, $remember = true)) {
-			return Redirect::intended('/')->with('flash_message', 'Welcome Back!');
+	  public function getSignup() {
+			return View::make('signup');
 		}
-		else {
-			return Redirect::to('/login')
-				->with('flash_message', 'Log in failed; please try again.')
-				->withInput();
+
+	  public function postSignup() {
+
+	    #Define the rules
+	    $rules = array(
+	      'email' => 'required|email|unique:users,email', //Required, email format, and unique user/email
+	      'password' => 'required'
+	    );
+
+	    #Run rules and data through validator
+	    $validator = Validator::make(Input::all(), $rules);
+
+	    #Give the user feedback
+	    if($validator->fails()) {
+
+	      return Redirect::to('/signup')
+	        ->with('flash_message', 'Sign up failed; please fix the errors listed below.')
+	        ->withInput()
+	        ->withErrors($validator);
+	    }
+
+	    $user = new User;
+	    $user->email    = Input::get('email');
+	    $user->password = Hash::make(Input::get('password')); //Hash the password!
+
+	    #Try/Catch Statement to add the user
+	    try {
+	        $user->save();
+	    }
+	    catch (Exception $e) {
+	        return Redirect::to('/signup')
+	          ->with('flash_message', 'Sign up failed; please try again.')
+	          ->withInput();
+	    }
+
+	    #User Log In
+	    Auth::login($user);
+
+	    return Redirect::to('/')->with('flash_message', 'Welcome to the Task Manager');
+
+	  }
+
+	////////////////////////////
+	//Login & Logout Functions//
+	////////////////////////////
+
+		public function getLogin() {
+
+			return View::make('login');
+
 		}
-		return Redirect::to('login');
-	}
 
+		public function postLogin() {
+			$credentials = Input::only('email', 'password');
 
-	public function getLogout() {
-		# Log out
-		Auth::logout();
+			if (Auth::attempt($credentials, $remember = true)) {
+				return Redirect::intended('/')->with('flash_message', 'Welcome Back!');
+			}
+			else {
+				return Redirect::to('/login')
+					->with('flash_message', 'Log in failed; please try again.')
+					->withInput();
+			}
+			return Redirect::to('login');
+		}
 
-		# Send them to the homepage
-		return Redirect::to('/');
-  }
+		public function getLogout() {
+			# Log out
+			Auth::logout();
+
+			# Send them to the homepage
+			return Redirect::to('/');
+	  }
 
 }
